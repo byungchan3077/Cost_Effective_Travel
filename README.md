@@ -12,3 +12,10 @@
 ## 3. Governance
 * **License:** MIT License
 * **Code of Conduct:** We follow the Contributor Covenant (See CODE_OF_CONDUCT.md)
+
+## 4. Key Features
+* **🌍 Real-time Currency Data:** Automatically fetches the latest daily exchange rates from **The Export-Import Bank of Korea Open API**.
+* **🍔 Purchasing Power Analysis:** Calculates the "True Value" of your budget by integrating **Cost of Living Indices** (e.g., Big Mac Index, Numbeo).
+* **💰 Budget Optimization:** Recommends the **Top 5 destinations** where your specific budget stretches the furthest based on current economic data.
+* **📝 Automated Reporting:** Generates a comprehensive analysis report (`result.txt`) summarizing exchange rates, local purchasing power, and estimated costs.
+* **⚡ CLI-First Design:** A lightweight, efficient command-line interface designed for quick data analysis without GUI overhead.
