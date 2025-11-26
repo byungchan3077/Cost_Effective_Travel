@@ -1,4 +1,4 @@
-# Cost-Effective-Travle -CET- ✈️💸
+# Cost-Effective-Travel -CET- ✈️💸
 
 ## 1. Goal & Vision
 * **Goal:** Develop a CLI tool that combines real-time exchange rates (Open API) and cost-of-living indices (Open Data) to recommend the most cost-effective travel destinations, maximizing the user's purchasing power within their budget.
