@@ -37,7 +37,7 @@ Our algorithm doesn't just look for cheap prices. It looks for **Value**.
     * `requests`: For fetching Exchange Rate API.
     * `pandas`: For processing Cost of Living CSV data.
     * `python-dotenv`: For secure API key management.
-* **Architecture:** Modular Design (`api`, `data`, `logic`, `services`, `report`).
+* **Architecture:** Modular Design (`api`, `data`, `logic`, `utils`).
 * **CI/CD:** GitHub Actions for automated testing.
 
 ## 5. Installation & Usage
