@@ -20,9 +20,9 @@ country_map = {
 def export_data():
     try:
         # ---- Load datasets ----
-        hotel = pd.read_csv("hotel_price_index.csv")
-        starbucks = pd.read_csv("starbucks_drink_index.csv")
-        bigmac = pd.read_csv("big_mac_index.csv")   
+        hotel = pd.read_csv("src/data/hotel_price_index.csv")
+        starbucks = pd.read_csv("src/data/starbucks_drink_index.csv")
+        bigmac = pd.read_csv("src/data/big_mac_index.csv")   
     except FileNotFoundError as e:
         print(f"Error: {e}")
         return
