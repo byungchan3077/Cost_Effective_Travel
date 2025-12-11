@@ -2,21 +2,19 @@ import pandas as pd
 import json
 
 country_map = {
-    "Japan": "JPN",
-    "United States": "USA",
-    "Italy": "ITA",
-    "Spain": "ESP",
-    "Indonesia": "IDN",
-    "Britain": "GBR",
-    "UK": "GBR",
-    "France": "FRA",
-    "Vietnam": "VNM",
-    "Singapore": "SGP",
-    "Thailand": "THA",
-    "Hong Kong": "HKG",
-    "Hongkong": "HKG",
-    "United Arab Emirates": "UAE",
-    "Taiwan": "TWN",
+    "Japan": "JPY(100)",
+    "United States": "USD",
+    "Italy": "EUR",
+    "Spain": "EUR",
+    "Indonesia": "IDR(100)",
+    "Britain": "GBP",
+    "UK": "GBP",
+    "France": "EUR",
+    "Singapore": "SGD",
+    "Thailand": "THB",
+    "Hong Kong": "HKD",
+    "Hongkong": "HKD",
+    "United Arab Emirates": "AED",
 }
 
 def export_data():
