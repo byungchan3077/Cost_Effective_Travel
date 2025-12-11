@@ -1,0 +1,42 @@
+{
+    "AED": {
+        "big_mac": 18.0,
+        "starbucks": 16.0,
+        "avg_hotel_krw": "244,000"
+    },
+    "GBP": {
+        "big_mac": 4.59,
+        "starbucks": 3.2,
+        "avg_hotel_krw": "370,000"
+    },
+    "HKD": {
+        "big_mac": 24.0,
+        "starbucks": 41.0,
+        "avg_hotel_krw": "296,000"
+    },
+    "IDR(100)": {
+        "big_mac": 41000.0,
+        "starbucks": 38000.0,
+        "avg_hotel_krw": "170,000"
+    },
+    "SGD": {
+        "big_mac": 6.95,
+        "starbucks": 6.1,
+        "avg_hotel_krw": "340,000"
+    },
+    "THB": {
+        "big_mac": 135.0,
+        "starbucks": 120.0,
+        "avg_hotel_krw": "150,000"
+    },
+    "Taiwan": {
+        "big_mac": 78.0,
+        "starbucks": 95.0,
+        "avg_hotel_krw": "193,000"
+    },
+    "Vietnam": {
+        "big_mac": 76000.0,
+        "starbucks": 65000.0,
+        "avg_hotel_krw": "210,000"
+    }
+}

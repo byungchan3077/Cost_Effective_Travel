@@ -17,7 +17,7 @@ from src.api.api_loader import load_api_key, SERVICE_CODE, BASE_URL
 from src.api.country_loader import get_target_currencies 
 
 # --- 1. Settings and Constants Definition ---
-DAYS_TO_FETCH = 5
+DAYS_TO_FETCH = 50
 DB_DIR = os.path.join(os.path.dirname(__file__), 'database') 
 DB_FILE_PREFIX = 'exchange_data_'
 MIN_PERIODS = 5 
