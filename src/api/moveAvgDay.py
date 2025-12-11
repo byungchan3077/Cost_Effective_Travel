@@ -20,7 +20,7 @@ from src.api.country_loader import get_target_currencies
 DAYS_TO_FETCH = 50
 DB_DIR = os.path.join(os.path.dirname(__file__), 'database') 
 DB_FILE_PREFIX = 'exchange_data_'
-MIN_PERIODS = 5 
+MIN_PERIODS = 50
 
 # --- 2. DB and Data Management Functions (Restored Previous Functions) ---
 
@@ -39,7 +39,7 @@ def load_db_data(file_path):
             df = df.sort_values(by='Date', ascending=False)
             return df
         except Exception as e:
-            print(f"⚠️ Error loading {os.path.basename(file_path)}: {e}. Creating new DataFrame.")
+            print(f" Error loading {os.path.basename(file_path)}: {e}. Creating new DataFrame.")
             return pd.DataFrame()
     return pd.DataFrame()
 
@@ -51,9 +51,9 @@ def save_db_data(df, file_path):
         # Convert 'Date' to string before saving (for consistency with load_db_data)
         df['Date'] = pd.to_datetime(df['Date']).dt.strftime('%Y%m%d')
         df.to_csv(file_path, index=True, encoding='utf-8')
-        print(f"✅ DB save complete: {os.path.basename(file_path)}, total {len(df)} days of data.")
+        print(f" DB save complete: {os.path.basename(file_path)}, total {len(df)} days of data.")
     else:
-        print(f"❌ No data to save, skipping file {os.path.basename(file_path)}.")
+        print(f" No data to save, skipping file {os.path.basename(file_path)}.")
 
 # --- 3. Optimized Data Collection Function (Restored Previous Function) ---
 # NOTE: BASE_URL, SERVICE_CODE constants are imported from api_loader and available globally
@@ -65,7 +65,7 @@ def fetch_optimized_data(api_key, currency_code, existing_dates, days_needed):
     
     # BASE_URL and SERVICE_CODE are global constants imported from the parent module.
 
-    print(f"🔍 [{currency_code}] Starting new data acquisition (Required business days: {days_needed})")
+    print(f" [{currency_code}] Starting new data acquisition (Required business days: {days_needed})")
 
     for i in range(1, MAX_ITERATIONS + 1):
         search_date = (datetime.now() - timedelta(days=i)).strftime("%Y%m%d")
@@ -81,7 +81,7 @@ def fetch_optimized_data(api_key, currency_code, existing_dates, days_needed):
             day_data = response.json()
 
             if day_data and day_data[0].get('result') == 4:
-                print("❌ API rate limit reached or no data available.")
+                print(" API rate limit reached or no data available.")
                 break 
 
             if day_data and not day_data[0].get('result') == 4:
@@ -100,7 +100,7 @@ def fetch_optimized_data(api_key, currency_code, existing_dates, days_needed):
                         break 
         
         except requests.exceptions.RequestException as e:
-            print(f"❌ [{search_date}] API request error occurred: {e}. Stopping iteration.")
+            print(f" [{search_date}] API request error occurred: {e}. Stopping iteration.")
             break 
             
         time.sleep(0.1) 
@@ -134,7 +134,7 @@ def get_50day_ma_data(api_key):
             new_df = fetch_optimized_data(api_key, currency_code, existing_dates, needed_days)
             updated_df = pd.concat([existing_df, new_df], ignore_index=True)
         else:
-            print(f"✅ [{currency_code}] Sufficient data ({current_data_count} days) exists in DB. Skipping API call.")
+            print(f" [{currency_code}] Sufficient data ({current_data_count} days) exists in DB. Skipping API call.")
 
         
         # 2. Moving Average Calculation
@@ -163,7 +163,7 @@ def get_50day_ma_data(api_key):
             })
 
         else:
-            print(f"⚠️ [{currency_code}] Data is less than the minimum {MIN_PERIODS} days. Cannot calculate MA. ({len(updated_df)} days)")
+            print(f" [{currency_code}] Data is less than the minimum {MIN_PERIODS} days. Cannot calculate MA. ({len(updated_df)} days)")
 
     return pd.DataFrame(all_ma_results)
 

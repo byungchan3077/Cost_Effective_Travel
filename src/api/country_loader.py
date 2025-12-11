@@ -16,7 +16,7 @@ except ImportError:
         "Australia": "AUD"
     }
     
-    print("⚠️ Cannot find country_map... Using temporary currency codes instead.")
+    print(" Cannot find country_map... Using temporary currency codes instead.")
 
 def get_target_currencies():
     """
@@ -26,7 +26,7 @@ def get_target_currencies():
 
     target_currencies = list(set(country_map.values()))
     
-    print(f"✅ Country_loader: Total {len(target_currencies)} currency codes loaded.")
+    print(f" Country_loader: Total {len(target_currencies)} currency codes loaded.")
     
     return target_currencies
 

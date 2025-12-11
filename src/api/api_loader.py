@@ -14,7 +14,7 @@ SERVICE_CODE = "AP01"
 TIMEOUT_SECONDS = 10 
 
 if not API_KEY:
-    raise ValueError("❌ API Key is not configured in the .env file. Please check the EXIM_API_KEY variable.")
+    raise ValueError(" API Key is not configured in the .env file. Please check the EXIM_API_KEY variable.")
 
 def load_api_key():
     """Returns the API Key, Base URL, and Service Code."""
@@ -24,8 +24,8 @@ def print_data_format(api_key, base_url, service_code):
     """
     Retrieves and prints data from a recent business day to verify the API data format.
     """
-    # Use a fixed recent business day (20251205) to check the data format.
-    date = "20251205" 
+    # Use a fixed recent business day (20251210) to check the data format.
+    date = "20251210" 
     
     params = {
         "authkey": api_key,
@@ -33,7 +33,7 @@ def print_data_format(api_key, base_url, service_code):
         "data": service_code
     }
     
-    print(f"\n--- 🔍 Verifying API Data Format: [{date}] ---")
+    print(f"\n--- Verifying API Data Format: [{date}] ---")
     
     try:
         response = requests.get(base_url, params=params, timeout=TIMEOUT_SECONDS)
@@ -42,10 +42,10 @@ def print_data_format(api_key, base_url, service_code):
         raw_json = response.json()
         
         if raw_json and raw_json[0].get('result') == 4:
-            print("❌ API Error: Daily limit reached or data does not exist for the specified date.")
+            print(" API Error: Daily limit reached or data does not exist for the specified date.")
             return
 
-        print(f"✅ API Response Status: {response.status_code} (Success)")
+        print(f" API Response Status: {response.status_code} (Success)")
         
         # Data format check (Output the first item)
         print("\n### Data Format (Mandatory Columns Check) ###")
@@ -53,7 +53,7 @@ def print_data_format(api_key, base_url, service_code):
         print(json.dumps(first_item, indent=4, ensure_ascii=False))
         
     except requests.exceptions.RequestException as e:
-        print(f"❌ API Request Failed: {e}.")
+        print(f" API Request Failed: {e}.")
 
 if __name__ == "__main__":
     API_KEY, BASE_URL, SERVICE_CODE = load_api_key()

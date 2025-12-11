@@ -4,7 +4,7 @@ import json
 from dotenv import load_dotenv
 from datetime import datetime
 
-# --- 1. Configuration and Constants Definition ---
+# 1. Configuration and Constants Definition
 load_dotenv()
 API_KEY = os.getenv("EXIM_API_KEY")
 
@@ -13,7 +13,7 @@ SERVICE_CODE = "AP01"
 TIMEOUT_SECONDS = 10 
 
 if not API_KEY:
-    print("❌ ERROR: EXIM_API_KEY is not configured in the .env file.")
+    print(" ERROR: EXIM_API_KEY is not configured in the .env file.")
     exit()
 
 def fetch_and_display_currency_data(api_key, base_url, service_code, currency_code):
@@ -40,7 +40,7 @@ def fetch_and_display_currency_data(api_key, base_url, service_code, currency_co
         
         # Check for API error code
         if raw_json and raw_json[0].get('result') == 4:
-            print("❌ API Error: No data for the requested date, or daily request limit reached.")
+            print(" API Error: No data for the requested date, or daily request limit reached.")
             return
 
         # 2. Data Filtering
@@ -54,7 +54,7 @@ def fetch_and_display_currency_data(api_key, base_url, service_code, currency_co
         
         # 3. Output Results
         if target_data:
-            print(f"✅ Data Found! Full data for currency code [{currency_code}]:")
+            print(f" Data Found! Full data for currency code [{currency_code}]:")
             
             # Print the JSON data cleanly
             print(json.dumps(target_data, indent=4, ensure_ascii=False))
@@ -64,11 +64,11 @@ def fetch_and_display_currency_data(api_key, base_url, service_code, currency_co
             print(f"  > Currency Name (cur_nm): {target_data.get('cur_nm')}")
             print(f"  > Basic Dealing Rate (deal_bas_r): {target_data.get('deal_bas_r')} KRW")
         else:
-            print(f"❌ ERROR: Currency code [{currency_code}] not found in the API response.")
+            print(f" ERROR: Currency code [{currency_code}] not found in the API response.")
             print("   (Ensure the currency code is exact, e.g., 'JPY(100)'.)")
             
     except requests.exceptions.RequestException as e:
-        print(f"❌ API Request Failed: {e}.")
+        print(f" API Request Failed: {e}.")
 
 
 if __name__ == "__main__":
