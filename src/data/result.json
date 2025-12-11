@@ -1,86 +1,56 @@
 {
-    "UAE": {
-        "currency": "AED",
-        "big_mac": 18.0,
-        "starbucks": 16.0,
-        "avg_hotel_krw": 0.0
-    },
-    "UK": {
-        "currency": "GBP",
-        "big_mac": 4.59,
-        "starbucks": 3.2,
-        "avg_hotel_krw": 0.0
-    },
     "Hong Kong": {
         "currency": "HKD",
         "big_mac": 24.0,
         "starbucks": 41.0,
-        "avg_hotel_krw": 0.0
+        "avg_hotel_krw": 296000
     },
     "Indonesia": {
         "currency": "IDR(100)",
         "big_mac": 41000.0,
         "starbucks": 38000.0,
-        "avg_hotel_krw": 0.0
+        "avg_hotel_krw": 170000
     },
     "Japan": {
         "currency": "JPY(100)",
         "big_mac": 480.0,
         "starbucks": 490.0,
-        "avg_hotel_krw": 0.0
+        "avg_hotel_krw": 205000
     },
     "Singapore": {
         "currency": "SGD",
         "big_mac": 6.95,
         "starbucks": 6.1,
-        "avg_hotel_krw": 0.0
+        "avg_hotel_krw": 340000
     },
     "Thailand": {
         "currency": "THB",
         "big_mac": 135.0,
         "starbucks": 120.0,
-        "avg_hotel_krw": 0.0
+        "avg_hotel_krw": 145000
     },
-    "Taiwan": {
-        "currency": "TWD",
-        "big_mac": 78.0,
-        "starbucks": 95.0,
-        "avg_hotel_krw": 0.0
-    },
-    "USA": {
-        "currency": "USD",
-        "big_mac": 5.79,
-        "starbucks": 4.84,
-        "avg_hotel_krw": 0.0
-    },
-    "Vietnam": {
-        "currency": "VND(100)",
-        "big_mac": 76000.0,
-        "starbucks": 65000.0,
-        "avg_hotel_krw": 0.0
+    "UK": {
+        "currency": "GBP",
+        "big_mac": 4.59,
+        "starbucks": 3.2,
+        "avg_hotel_krw": 370000
     },
     "France": {
         "currency": "EUR",
         "big_mac": 5.67,
         "starbucks": 3.75,
-        "avg_hotel_krw": 0.0
+        "avg_hotel_krw": 400000
     },
     "Italy": {
         "currency": "EUR",
         "big_mac": 5.67,
         "starbucks": 4.75,
-        "avg_hotel_krw": 0.0
+        "avg_hotel_krw": 340000
     },
     "Spain": {
         "currency": "EUR",
         "big_mac": 5.67,
         "starbucks": 3.9,
-        "avg_hotel_krw": 0.0
-    },
-    "Austria": {
-        "currency": "EUR",
-        "big_mac": 5.67,
-        "starbucks": 5.2,
-        "avg_hotel_krw": 0.0
+        "avg_hotel_krw": 318000
     }
 }

@@ -2,138 +2,146 @@ import pandas as pd
 import json
 import os
 
+# Get the folder path where this script is located
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
-# 1. Name Standardization Map
-# Unifies various country name formats from Excel into a single standard name.
-name_standardize_map = {
+# 1. Country Name Standardization
+# (This unifies different names like "Britain" and "UK" into one standard name)
+name_map = {
     "Britain": "UK",
     "United Kingdom": "UK",
     "United States": "USA",
-    "Hongkong": "Hong Kong", 
+    "Hongkong": "Hong Kong",
     "Hong Kong": "Hong Kong",
     "United Arab Emirates": "UAE"
 }
 
-# 2. Currency Mapping
-# Maps standard country names to their currency codes.
-currency_map = {
+# 2. Country Map (Renamed from currency_map)
+# (Only countries listed here will be included in the final result)
+country_map = {
     "Japan": "JPY(100)",
-    "USA": "USD",
+    "United States": "USD",
     "Italy": "EUR",
     "Spain": "EUR",
-    "France": "EUR",
-    "Austria": "EUR",
     "Indonesia": "IDR(100)",
+    "Britain": "GBP",
     "UK": "GBP",
+    "France": "EUR",
     "Singapore": "SGD",
     "Thailand": "THB",
     "Hong Kong": "HKD",
-    "UAE": "AED",
-    "Vietnam": "VND(100)",
-    "Taiwan": "TWD",
+    "Hongkong": "HKD",
+    "United Arab Emirates": "AED",
 }
 
-# 3. Euro Zone Countries List
-# Used to copy 'Euro area' Big Mac data to specific countries.
-euro_zone_countries = ["France", "Italy", "Spain", "Austria"]
+# 3. Euro Zone Countries
+# (We need this because the Big Mac index groups these under "Euro area")
+euro_countries = ["France", "Italy", "Spain", "Austria", "Germany"]
 
-def load_and_process_data():
-    # Construct file paths
-    hotel_path = os.path.join(script_dir, "hotel_price_index.csv")
-    starbucks_path = os.path.join(script_dir, "starbucks_drink_index.csv")
-    bigmac_path = os.path.join(script_dir, "big_mac_index.csv")
-    
+def clean_number(value):
+    """
+    Removes commas (,) and spaces from a value to make it a real number.
+    Example: "1,000" -> 1000.0
+    """
     try:
-        # Load Data
-        hotel = pd.read_csv(hotel_path)
-        starbucks = pd.read_csv(starbucks_path)
-        bigmac = pd.read_csv(bigmac_path) 
-    except FileNotFoundError as e:
-        print(f"❌ Error: File not found: {e}")
-        return None
+        # Convert to string, remove comma and space, then convert to float
+        value = str(value).replace(',', '').strip()
+        return float(value)
+    except:
+        # If it fails (e.g., text is not a number), return 0
+        return 0
 
-    # --- Step 1: Clean Whitespace and Rename Columns ---
-    
-    # Rename columns for consistency
+def main():
+    # Load the CSV files
+    try:
+        hotel = pd.read_csv(os.path.join(script_dir, "hotel_price_index.csv"))
+        starbucks = pd.read_csv(os.path.join(script_dir, "starbucks_drink_index.csv"))
+        bigmac = pd.read_csv(os.path.join(script_dir, "big_mac_index.csv"))
+    except:
+        # If files are missing, print an empty object and exit
+        print("{}")
+        return
+
+    # --- Start Data Cleaning ---
+
+    # 1. Clean Column Names
+    # .strip() removes spaces from the beginning and end of column names
+    hotel.columns = hotel.columns.str.strip()
+    starbucks.columns = starbucks.columns.str.strip()
+    bigmac.columns = bigmac.columns.str.strip()
+
+    # Rename columns to be consistent
     hotel = hotel.rename(columns={"Avg_price": "avg_hotel_krw"})
     starbucks = starbucks.rename(columns={"Avg_price": "starbucks_price"})
     bigmac = bigmac.rename(columns={"local_price": "bigmac_price"})
 
-    # [CRITICAL FIX] Force convert price data to numeric
-    # 'errors="coerce"' converts non-numeric strings to NaN (preventing the previous KeyError)
-    hotel["avg_hotel_krw"] = pd.to_numeric(hotel["avg_hotel_krw"], errors='coerce')
-    starbucks["starbucks_price"] = pd.to_numeric(starbucks["starbucks_price"], errors='coerce')
-    bigmac["bigmac_price"] = pd.to_numeric(bigmac["bigmac_price"], errors='coerce')
+    # 2. Convert Text to Numbers
+    # Apply the 'clean_number' function to every row in the price columns
+    hotel["avg_hotel_krw"] = hotel["avg_hotel_krw"].apply(clean_number)
+    starbucks["starbucks_price"] = starbucks["starbucks_price"].apply(clean_number)
+    bigmac["bigmac_price"] = bigmac["bigmac_price"].apply(clean_number)
 
-    # Remove leading/trailing whitespace from Country names
+    # 3. Clean Country Names
     for df in [hotel, starbucks, bigmac]:
         if "Country" in df.columns:
+            # Remove spaces and standardize names (e.g., Britain -> UK)
             df["Country"] = df["Country"].astype(str).str.strip()
+            df["Country"] = df["Country"].replace(name_map)
 
-    # --- Step 2: Calculate Country Averages ---
-    # Hotel and Starbucks data have multiple cities per country.
-    # Group by Country and calculate the mean.
-    hotel = hotel.groupby("Country")[["avg_hotel_krw"]].mean().reset_index()
-    starbucks = starbucks.groupby("Country")[["starbucks_price"]].mean().reset_index()
+    # 4. Calculate Averages
+    # Group by Country (handles multiple cities like Tokyo/Osaka -> Japan Avg)
+    hotel = hotel.groupby("Country")["avg_hotel_krw"].mean().reset_index()
+    starbucks = starbucks.groupby("Country")["starbucks_price"].mean().reset_index()
+    bigmac = bigmac.groupby("Country")["bigmac_price"].mean().reset_index()
 
-    # --- Step 3: Expand Euro Zone Data ---
-    # Find the 'Euro area' row in the Big Mac index
+    # 5. Handle 'Euro area'
+    # Copy 'Euro area' Big Mac price to individual countries like France/Italy
     euro_row = bigmac[bigmac["Country"] == "Euro area"]
     
     if not euro_row.empty:
-        euro_price = euro_row.iloc[0]["bigmac_price"]
+        price = euro_row.iloc[0]["bigmac_price"]
         
-        # Create new rows for individual Euro zone countries
-        new_rows = []
-        for country in euro_zone_countries:
-            new_rows.append({"Country": country, "bigmac_price": euro_price})
+        # Check each Euro country and add it if missing from Big Mac data
+        new_data = []
+        for country in euro_countries:
+            if country not in bigmac["Country"].values:
+                new_data.append({"Country": country, "bigmac_price": price})
         
-        # Append these new rows to the dataframe
-        euro_df = pd.DataFrame(new_rows)
-        bigmac = pd.concat([bigmac, euro_df], ignore_index=True)
+        # Add the new rows to the existing Big Mac data
+        if new_data:
+            bigmac = pd.concat([bigmac, pd.DataFrame(new_data)], ignore_index=True)
 
-    # --- Step 4: Standardize Country Names ---
-    # Apply the mapping map to handle variations (e.g., Britain -> UK)
-    hotel["Country"] = hotel["Country"].replace(name_standardize_map)
-    starbucks["Country"] = starbucks["Country"].replace(name_standardize_map)
-    bigmac["Country"] = bigmac["Country"].replace(name_standardize_map)
-
-    # --- Step 5: Merge Data ---
-    # Use inner join to keep only countries present in all three datasets
+    # 6. Merge Data
+    # Combine all three datasets (keep only countries present in ALL three)
     merged = bigmac.merge(starbucks, on="Country", how="inner")
     merged = merged.merge(hotel, on="Country", how="inner")
-    
-    # Fill any remaining NaNs with 0
-    merged = merged.fillna(0)
+    merged = merged.fillna(0) # Fill any missing values with 0
 
-    # --- Step 6: Map Currency Codes and Finalize ---
-    merged["currency_code"] = merged["Country"].map(currency_map)
-    
+    # 7. Create Result Dictionary
     result = {}
-    for _, row in merged.iterrows():
-        country_name = row["Country"]
-        result[country_name] = {
-            "currency": row["currency_code"] if row["currency_code"] != 0 else "Unknown",
-            "big_mac": round(row["bigmac_price"], 2),
-            "starbucks": round(row["starbucks_price"], 2),
-            "avg_hotel_krw": round(row["avg_hotel_krw"], 0), # Remove decimals for hotel prices
-        }
     
-    return result
+    # Loop through each row and add to dictionary
+    for i, row in merged.iterrows():
+        country = row["Country"]
+        
+        # [UPDATED] Check against country_map instead of currency_map
+        if country in country_map:
+            code = country_map[country]
+            
+            result[country] = {
+                "currency": code,
+                "big_mac": round(row["bigmac_price"], 2),     # Round to 2 decimals
+                "starbucks": round(row["starbucks_price"], 2),
+                "avg_hotel_krw": int(row["avg_hotel_krw"])    # Hotel price as integer
+            }
+
+    # Print Result to Console (JSON format)
+    print(json.dumps(result, indent=4, ensure_ascii=False))
+
+    # Save to File
+    output_path = os.path.join(script_dir, "result.json")
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(result, f, indent=4, ensure_ascii=False)
 
 if __name__ == "__main__":
-    data = load_and_process_data()
-    
-    if data:
-        # Console Output
-        print("\n" + "="*50)
-        print(f"📊 Processing Complete! Generated data for {len(data)} countries.")
-        print("="*50)
-        print(json.dumps(data, indent=4, ensure_ascii=False))
-        
-        # Save to file
-        output_path = os.path.join(script_dir, "result.json")
-        with open(output_path, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=4, ensure_ascii=False)
-        print("="*50 + "\n")
+    main()
