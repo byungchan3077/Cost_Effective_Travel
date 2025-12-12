@@ -63,7 +63,7 @@ def fetch_optimized_data(api_key, currency_code, existing_dates, days_needed):
     fetched_count = 0
     MAX_ITERATIONS = 100
     
-    # BASE_URL and SERVICE_CODE are global constants imported from the parent module.
+    # BASE_URL and SERVICE_CODE are global constants imported from the parent module..
 
     print(f" [{currency_code}] Starting new data acquisition (Required business days: {days_needed})")
 
