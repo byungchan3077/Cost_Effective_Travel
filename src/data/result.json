@@ -1,42 +1,56 @@
 {
-    "AED": {
-        "big_mac": 18.0,
-        "starbucks": 16.0,
-        "avg_hotel_krw": "244,000"
-    },
-    "GBP": {
-        "big_mac": 4.59,
-        "starbucks": 3.2,
-        "avg_hotel_krw": "370,000"
-    },
-    "HKD": {
+    "Hong Kong": {
+        "currency": "HKD",
         "big_mac": 24.0,
         "starbucks": 41.0,
-        "avg_hotel_krw": "296,000"
+        "avg_hotel_krw": 296000
     },
-    "IDR(100)": {
+    "Indonesia": {
+        "currency": "IDR(100)",
         "big_mac": 41000.0,
         "starbucks": 38000.0,
-        "avg_hotel_krw": "170,000"
+        "avg_hotel_krw": 170000
     },
-    "SGD": {
+    "Japan": {
+        "currency": "JPY(100)",
+        "big_mac": 480.0,
+        "starbucks": 490.0,
+        "avg_hotel_krw": 205000
+    },
+    "Singapore": {
+        "currency": "SGD",
         "big_mac": 6.95,
         "starbucks": 6.1,
-        "avg_hotel_krw": "340,000"
+        "avg_hotel_krw": 340000
     },
-    "THB": {
+    "Thailand": {
+        "currency": "THB",
         "big_mac": 135.0,
         "starbucks": 120.0,
-        "avg_hotel_krw": "150,000"
+        "avg_hotel_krw": 145000
     },
-    "Taiwan": {
-        "big_mac": 78.0,
-        "starbucks": 95.0,
-        "avg_hotel_krw": "193,000"
+    "UK": {
+        "currency": "GBP",
+        "big_mac": 4.59,
+        "starbucks": 3.2,
+        "avg_hotel_krw": 370000
     },
-    "Vietnam": {
-        "big_mac": 76000.0,
-        "starbucks": 65000.0,
-        "avg_hotel_krw": "210,000"
+    "France": {
+        "currency": "EUR",
+        "big_mac": 5.67,
+        "starbucks": 3.75,
+        "avg_hotel_krw": 400000
+    },
+    "Italy": {
+        "currency": "EUR",
+        "big_mac": 5.67,
+        "starbucks": 4.75,
+        "avg_hotel_krw": 340000
+    },
+    "Spain": {
+        "currency": "EUR",
+        "big_mac": 5.67,
+        "starbucks": 3.9,
+        "avg_hotel_krw": 318000
     }
 }
