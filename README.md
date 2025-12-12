@@ -5,6 +5,8 @@
 > A CLI tool that calculates the **Real Purchasing Power Index (PPI)** of your budget to recommend the most financially efficient travel destinations.
 
 ---
+input:python src/main.py --budget 1000000 --days 10 
+-change the number
 
 ## 1. Goal & Vision
 * **Goal:** Develop a data analysis tool that combines **Real-time Exchange Trends** (API) and **Local Survival Costs** (CSV) to identify destinations where your money has the highest value.
