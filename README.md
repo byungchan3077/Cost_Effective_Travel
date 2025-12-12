@@ -13,10 +13,10 @@
 ## 2. Key Features
 * **🌍 Real-time Financial Analysis:** Fetches live exchange rates and compares them with **1-year moving averages** to identify undervalued currencies (Discounted Rates).
 * **🍔 Survival Basket Logic:** Calculates the minimum daily living cost based on real-world metrics: **3 Big Macs + 2 starbucks americano + hotel(for one day)**.
-* **📊 Purchasing Power Index (PPI):** Generates a standardized score (Baseline: 100).
-    * **Score > 100:** You are "Rich" (Budget > Survival Cost).
-    * **Score < 100:** You are "Poor" (Budget < Survival Cost).
-* **🎯 Curated Destinations:** Analyzes ~30 popular destinations preferred by travelers to ensure relevant recommendations.
+* **📊 Purchasing Power Index (PPI):** Generates a standardized score (Baseline: 1).
+    * **Score > 1:** You are "Rich" (Budget > Survival Cost).
+    * **Score < 1:** You are "Poor" (Budget < Survival Cost).
+* **🎯 Curated Destinations:** Analyzes 9 popular destinations preferred by travelers to ensure relevant recommendations.
 * **⚡ CLI-First Design:** Lightweight and fast command-line interface with automated report generation (`result.txt`).
 
 ## 3. How It Works (The Logic)
