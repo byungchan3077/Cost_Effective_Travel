@@ -61,7 +61,7 @@ def fetch_optimized_data(api_key, currency_code, existing_dates, days_needed):
     """Fetches only the required dates' data from the API that are missing from the existing DB."""
     new_data = []
     fetched_count = 0
-    MAX_ITERATIONS = days_needed * 2 + 7 
+    MAX_ITERATIONS = 100
     
     # BASE_URL and SERVICE_CODE are global constants imported from the parent module.
 
